@@ -117,6 +117,14 @@
             
         }
 
+        function squaresAreFull(pawn){
+            for(var i=0, len=pawn.length; i<len; i++){
+                if(pawn[i].innerHTML.length==0)
+                return false;
+            }
+            return true;
+        }
+
         class Display { /*takes de text from var display and shows it in #gameStatus*/
             constructor(element){
                 var displayer = element;
@@ -130,7 +138,7 @@
             }
         }
 
-        function main(){
+        (function main(){
 
             /*will contain the values in our squares*/
             var pawn = document.
@@ -159,14 +167,17 @@
 
                             //Game over (someone won)
                             if(gameOver){
-                               display.sendMessage("Player" + players[whoPlays] + " won !!!");
+                               display.sendMessage("Player " + players[whoPlays] + " won !!!" +"</br><a href=\"tic_tac_toe.html\">Pay again ?</a>");
                                return;
                             }
                             //GameOver (draw)
-
+                            if(squaresAreFull(pawn)){
+                                display.sendMessage("It's a draw." + "</br><a href=\"tic_tac_toe.html\">Pay again ?</a>");
+                                return;
+                            }
                             //Game not over yet
-                            whoPlays++, //if 0 goes to 1 if 1 goes to 2 then 2%2=0
-                            whoplays%=2;
+                            whoPlays=whoPlays+1; //if 0 goes to 1 if 1 goes to 2 then 2%2=0
+                            whoPlays=whoPlays%2;
 
                             display.sendMessage("Player " + players[whoPlays] + " it's your turn");
                         }
@@ -174,9 +185,8 @@
                 }); 
             }
 
-        };
+        })();
 
-        main();
     </script>
 </body>
 </html>
