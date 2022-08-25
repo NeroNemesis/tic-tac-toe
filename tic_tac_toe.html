@@ -70,6 +70,53 @@
             return button.innerHTML.length==0;
         }
 
+        function setSymbol(butt, symbol){ //set the symbol of the player who clicked in the square
+            butt.innerHTML=symbol;
+        }
+
+        function searchWinner(pawn, players, whoPlays){ //checking all the possibilities to know wo wins
+            if( pawn[0].innerHTML == players[whoPlays] &&
+                pawn[1].innerHTML == players[whoPlays] &&
+                pawn[2].innerHTML == players[whoPlays] )
+                return true;
+            
+            if( pawn[3].innerHTML == players[whoPlays] &&
+                pawn[4].innerHTML == players[whoPlays] &&
+                pawn[5].innerHTML == players[whoPlays] )
+                return true;
+
+            if( pawn[6].innerHTML == players[whoPlays] &&
+                pawn[7].innerHTML == players[whoPlays] &&
+                pawn[8].innerHTML == players[whoPlays] )
+                return true;
+            
+            if( pawn[0].innerHTML == players[whoPlays] &&
+                pawn[3].innerHTML == players[whoPlays] &&
+                pawn[6].innerHTML == players[whoPlays] )
+                return true;
+
+            if( pawn[1].innerHTML == players[whoPlays] &&
+                pawn[4].innerHTML == players[whoPlays] &&
+                pawn[7].innerHTML == players[whoPlays] )
+                return true;
+
+            if( pawn[2].innerHTML == players[whoPlays] &&
+                pawn[5].innerHTML == players[whoPlays] &&
+                pawn[8].innerHTML == players[whoPlays] )
+                return true;
+
+            if( pawn[0].innerHTML == players[whoPlays] &&
+                pawn[4].innerHTML == players[whoPlays] &&
+                pawn[8].innerHTML == players[whoPlays] )
+                return true;
+
+            if( pawn[2].innerHTML == players[whoPlays] &&
+                pawn[4].innerHTML == players[whoPlays] &&
+                pawn[6].innerHTML == players[whoPlays] )
+                return true;
+            
+        }
+
         class Display { /*takes de text from var display and shows it in #gameStatus*/
             constructor(element){
                 var displayer = element;
@@ -105,13 +152,16 @@
                         return;
                     
                         if(!isValid(this)){ /*check if the square is not already selected */
-
+                            display.sendMessage("Invalid move !");
                         }else{
                             setSymbol(this, players[whoPlays]);
                             gameOver = searchWinner(pawn,players,whoPlays);
 
-                            //Game over
-
+                            //Game over (someone won)
+                            if(gameOver){
+                               display.sendMessage("Player" + players[whoPlays] + " won !!!");
+                               return;
+                            }
                             //GameOver (draw)
 
                             //Game not over yet
@@ -121,7 +171,7 @@
                             display.sendMessage("Player " + players[whoPlays] + " it's your turn");
                         }
 
-                });
+                }); 
             }
 
         };
