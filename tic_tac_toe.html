@@ -66,6 +66,10 @@
 
     <script type="text/javascript">
 
+        function isValid(button){ //checks if a square has been used already
+            return button.innerHTML.length==0;
+        }
+
         class Display { /*takes de text from var display and shows it in #gameStatus*/
             constructor(element){
                 var displayer = element;
@@ -92,7 +96,33 @@
             var display = new Display(document.
             querySelector("#gameStatus"));
 
-            display.sendMessage("Le jeu peut démarrer.<br/> Joueur " + players[whoPlays] + " c'est votre tour.");
+            display.sendMessage("Let's start the game.<br/> Player " + players[whoPlays] + " it's your turn.");
+
+            for(var i=0, len=pawn.length; i<len; i++){
+                pawn[i].addEventListener("click",function(){
+                   
+                    if(gameOver) /*check if somone won*/
+                        return;
+                    
+                        if(!isValid(this)){ /*check if the square is not already selected */
+
+                        }else{
+                            setSymbol(this, players[whoPlays]);
+                            gameOver = searchWinner(pawn,players,whoPlays);
+
+                            //Game over
+
+                            //GameOver (draw)
+
+                            //Game not over yet
+                            whoPlays++, //if 0 goes to 1 if 1 goes to 2 then 2%2=0
+                            whoplays%=2;
+
+                            display.sendMessage("Player " + players[whoPlays] + " it's your turn");
+                        }
+
+                });
+            }
 
         };
 
