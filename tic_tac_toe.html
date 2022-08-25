@@ -66,7 +66,20 @@
 
     <script type="text/javascript">
 
-        (function main(){
+        class Display { /*takes de text from var display and shows it in #gameStatus*/
+            constructor(element){
+                var displayer = element;
+            
+                function setText(message) {
+                    displayer.innerHTML =message;
+
+                }
+
+                return{sendMessage : setText}; /*returning and interface*/
+            }
+        }
+
+        function main(){
 
             /*will contain the values in our squares*/
             var pawn = document.
@@ -76,10 +89,14 @@
             var players = ['X','O']; /*list of players*/
             var whoPlays =0; /*0 or 1 depending on who plays*/
             var gameOver = false;
-            var display = document.
-            querySelector("#gameStatus");
+            var display = new Display(document.
+            querySelector("#gameStatus"));
 
-        })();
+            display.sendMessage("Le jeu peut démarrer.<br/> Joueur " + players[whoPlays] + " c'est votre tour.");
+
+        };
+
+        main();
     </script>
 </body>
 </html>
